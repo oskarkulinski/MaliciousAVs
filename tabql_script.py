@@ -47,7 +47,7 @@ if __name__ == "__main__":
     network = args.net
     env_seed = args.env_seed
     baseline_model = "tabql"
-    assert baseline_model in kc.HUMAN_MODELS, f"Model {baseline_model} not in {kc.HUMAN_MODELS}"
+    #assert baseline_model in kc.HUMAN_MODELS, f"Model {baseline_model} not in {kc.HUMAN_MODELS}"
     print("### STARTING EXPERIMENT ###")
     print(f"Experiment ID: {exp_id}")
     print(f"Network: {network}")
@@ -142,7 +142,7 @@ if __name__ == "__main__":
         simulator_parameters = {
             "network_name" : network,
             "custom_network_folder" : custom_network_folder,
-            "sumo_type" : "sumo_gui",
+            "sumo_type" : "sumo-gui",
         }, 
         plotter_parameters = {
             "phases" : phases,
@@ -207,7 +207,7 @@ if __name__ == "__main__":
     for h_id, human in mutated_humans.items():
         initial_knowledge = free_flows[(human.origin, human.destination)]
         initial_knowledge = [-1 * item for item in initial_knowledge]
-        mutated_humans[h_id].model = TabularQLearning(1, 1, )
+        mutated_humans[h_id].model = TabularQLearning(20, 20, )
        
     # Training
     pbar.set_description("AV learning")
@@ -219,6 +219,7 @@ if __name__ == "__main__":
 
         for agent in env.agent_iter():
             observation, reward, termination, truncation, info = env.last()
+            print(observation)
 
             # Convert observation to discrete state (you'll implement this)
             current_state = observation  # Assuming this will be discrete
