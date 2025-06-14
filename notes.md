@@ -1,4 +1,4 @@
-Experiments:
+Tests:
 1. 17:00 12.06.2025 - 
     python scripts/ippo_torchrl.py --id saint_0 --alg-conf config5 --task-conf config5 --net saint_arnoult --env-seed 42 --torch-seed 0
 
@@ -15,3 +15,6 @@ obsrvations should be made into bins, maybe bins of 5 for 100 agents
 batch size 16-64 if deep learning
 config 1 if ippo 2 depth and less cells
 policy updates every day
+
+Experiments
+1. python scripts/tabql.py --id test_tabql --alg-conf config1 --task-conf config5 --net ingolstadt_custom --env-seed 42 --model tabql
