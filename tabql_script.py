@@ -23,6 +23,7 @@ import pandas as pd
 
 from routerl import Keychain as kc
 from routerl import TrafficEnvironment
+from routerl.environment import HumanAgent
 from tqdm import tqdm
 
 from utils import clear_SUMO_files
@@ -142,7 +143,7 @@ if __name__ == "__main__":
         simulator_parameters = {
             "network_name" : network,
             "custom_network_folder" : custom_network_folder,
-            "sumo_type" : "sumo-gui",
+            "sumo_type" : "sumo",
         }, 
         plotter_parameters = {
             "phases" : phases,
@@ -173,7 +174,6 @@ if __name__ == "__main__":
     env.start()
     res = env.reset()
 
-     
     # Human learning
     pbar = tqdm(total=total_episodes, desc="Human learning")
     for episode in range(human_learning_episodes):
@@ -207,10 +207,11 @@ if __name__ == "__main__":
     for h_id, human in mutated_humans.items():
         initial_knowledge = free_flows[(human.origin, human.destination)]
         initial_knowledge = [-1 * item for item in initial_knowledge]
-        mutated_humans[h_id].model = TabularQLearning(20, 20, )
+        mutated_humans[h_id].model = TabularQLearning(number_routes=4)
        
     # Training
     pbar.set_description("AV learning")
+
     for episode in range(training_eps):
         env.reset()
         # Store previous step info for each agent
@@ -219,15 +220,13 @@ if __name__ == "__main__":
 
         for agent in env.agent_iter():
             observation, reward, termination, truncation, info = env.last()
-            print(observation)
 
             # Convert observation to discrete state (you'll implement this)
-            current_state = observation  # Assuming this will be discrete
+            current_state = observation[1:] # Assuming this will be discrete
 
             done = termination or truncation
-
             if agent in prev_states:
-                mutated_humans[agent].learn(
+                mutated_humans[agent].model.learn(
                     state=prev_states[agent],
                     action=prev_actions[agent], 
                     reward=reward,
@@ -246,9 +245,8 @@ if __name__ == "__main__":
                 # Store current step info for next iteration
                 prev_states[agent] = current_state
                 prev_actions[agent] = action
-
             env.step(action)
-    pbar.update()
+        pbar.update()
     
     # Testing
     pbar.set_description("Testing")
@@ -259,7 +257,7 @@ if __name__ == "__main__":
             if termination or truncation:
                 action = None
             else:
-                action = mutated_humans[agent].act(0)
+                action = mutated_humans[agent].act(observation)
             env.step(action)
         pbar.update()
 

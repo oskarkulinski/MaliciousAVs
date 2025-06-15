@@ -5,10 +5,11 @@ from collections import defaultdict
 from .base import BaseLearningModel
 
 class TabularQLearning(BaseLearningModel):
-    def __init__(self, state_space_size, action_space_size, learning_rate=0.1, gamma=0.99, epsilon=0.99, epsilon_decay_rate=0.998):
+    def __init__(self, number_routes, bin_size=5, cars=100, learning_rate=0.1, gamma=0.99, epsilon=0.99, epsilon_decay_rate=0.9829):
         super().__init__()
-        self.state_space_size = state_space_size
-        self.action_space_size = action_space_size
+        self.number_routes = number_routes
+        self.bin_size = bin_size
+        self.max_bins = cars// bin_size +1
         self.learning_rate = learning_rate 
         self.gamma = gamma  # Discount factor
         self.epsilon = epsilon
@@ -19,17 +20,46 @@ class TabularQLearning(BaseLearningModel):
         # For simplicity, assuming states can be used as keys (e.g., tuples for discrete states)
         # If state_space_size is well-defined and states are integers, a numpy array would be better:
         # self.q_table = np.zeros((state_space_size, action_space_size))
-        self.q_table = defaultdict(lambda: np.zeros(self.action_space_size))
+        self.q_table = defaultdict(lambda: np.zeros(self.number_routes))
 
         self.loss = [] 
 
+    def create_feature_state(self, route_cars):
+        """
+        Create a smaller state space using engineered features
+        """
+        features = []
+        
+        # Feature 1: Which route has minimum cars?
+        min_cars_route = np.argmin(route_cars)
+        features.append(min_cars_route)
+        
+        # Feature 2: Difference between min and max cars
+        car_spread = np.max(route_cars) - np.min(route_cars)
+        spread_bin = min(car_spread // 5, 10)  # Cap at 10 bins
+        features.append(spread_bin)
+        
+        # Feature 3: Total cars on all routes (congestion level)
+        total_cars = np.sum(route_cars)
+        total_bin = min(total_cars // 10, 10)  # Cap at 20 bins
+        features.append(total_bin)
+        
+        # Feature 4: How many routes are "lightly loaded" (< 5 cars)
+        light_routes = sum(1 for cars in route_cars if cars < 5)
+        features.append(light_routes)
+        
+        return tuple(features)
+
     def act(self, state):
+        state = self.create_feature_state(state)
         if np.random.rand() < self.epsilon:
-            return np.random.choice(self.action_space_size)
+            return np.random.choice(self.number_routes)
         else:
             return np.argmax(self.q_table[state])
 
     def learn(self, state, action, reward, next_state=None, done=False):
+        state = self.create_feature_state(state)
+        next_state = self.create_feature_state(next_state) if next_state else None
         current_q_value = self.q_table[state][action]
 
         if done:
