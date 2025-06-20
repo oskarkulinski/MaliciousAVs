@@ -36,17 +36,7 @@ class TabularQLearning(BaseLearningModel):
         
         # Feature 2: Difference between min and max cars
         car_spread = np.max(route_cars) - np.min(route_cars)
-        spread_bin = min(car_spread // 5, 10)  # Cap at 10 bins
-        features.append(spread_bin)
-        
-        # Feature 3: Total cars on all routes (congestion level)
-        total_cars = np.sum(route_cars)
-        total_bin = min(total_cars // 10, 10)  # Cap at 20 bins
-        features.append(total_bin)
-        
-        # Feature 4: How many routes are "lightly loaded" (< 5 cars)
-        light_routes = sum(1 for cars in route_cars if cars < 5)
-        features.append(light_routes)
+        features.append(car_spread)
         
         return tuple(features)
 

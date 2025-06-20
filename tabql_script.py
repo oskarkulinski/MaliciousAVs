@@ -221,8 +221,8 @@ if __name__ == "__main__":
         for agent in env.agent_iter():
             observation, reward, termination, truncation, info = env.last()
 
-            # Convert observation to discrete state (you'll implement this)
-            current_state = observation[1:] # Assuming this will be discrete
+            # we remove the first observation which is the start time
+            current_state = observation[1:]
 
             done = termination or truncation
             if agent in prev_states:
@@ -254,6 +254,8 @@ if __name__ == "__main__":
         env.reset()
         for agent in env.agent_iter():
             observation, reward, termination, truncation, info = env.last()
+            # we remove the first obsercation which is the start time
+            observation = observation[1:]
             if termination or truncation:
                 action = None
             else:
