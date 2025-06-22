@@ -1,0 +1,23 @@
+{
+    "training_eps": 20,
+    "smooth_by": 10,
+    "plot_choices": "basic",
+    "save_every": 5,
+    "number_of_paths": 4,
+    "path_gen_beta": -5,
+    "num_samples": 10,
+    "ratio_machines": 0.4,
+    "human_learning_episodes": 200,
+    "test_eps": 100,
+    "should_humans_adapt": false,
+    "av_behavior": "malicious",
+    "human_model": "gawron",
+    "network": "ingolstadt_custom",
+    "env_seed": 42,
+    "env_config": "config1",
+    "task_config": "config5",
+    "alg_config": "config1",
+    "baseline_model": "random",
+    "num_agents": 700,
+    "num_machines": 280
+}
