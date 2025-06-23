@@ -7,7 +7,7 @@ from scipy.stats import pearsonr
 
 # tests = ["tabql_500", "tabql_700", "tabql_1034", "tabql_500_adapt", "tabql_700_adapt", "tabql_1034_adapt"]
 # tests = ['tabql_20', 'tabql_40', 'tabql_60'] for 1035
-tests = ['tabql_700_20', 'tabql_700_60'] # for 700
+tests = ['tabql_700_20', 'tabql_700', 'tabql_700_60'] # for 700
 # tests = ['tabql3_500_20', 'tabql3_500', 'tabql3_500_60'] # for 500
 col_pre = "t_HDV_pre"
 col_test = "t_HDV_test" 
@@ -15,7 +15,7 @@ col_test = "t_HDV_test"
 total_data = []
 
 for test in tests:
-    # path = f"results/{test}/metrics/BenchmarkMetrics.csv"
+    #path = f"results/{test}/metrics/BenchmarkMetrics.csv"
     path = f"./results_jk/{test}/metrics/BenchmarkMetrics.csv"
     df = pd.read_csv(path)
     df["test"] = test
@@ -29,6 +29,7 @@ combined_df = combined_df.sort_values(by=['test']).reset_index(drop=True)
 
 values1 = combined_df[col_pre].tolist()
 values2 = combined_df[col_test].tolist()
+print(values1)
 print(values2)
 print(np.array(values2) - np.array(values1))
 fig, ax = plt.subplots(figsize=(16, 9))
