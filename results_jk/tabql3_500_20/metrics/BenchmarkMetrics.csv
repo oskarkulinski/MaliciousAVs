@@ -1,0 +1,2 @@
+t_pre,t_test,t_train,t_CAV,t_HDV_pre,t_HDV_test,CAV_advantage,Effect_of_change,Effect_of_remaining,diff_sumo_routerl,avg_speed_pre,avg_speed_test,avg_mileage_pre,avg_mileage_test,cost_of_learning,cost_of_learning_humans,cost_of_learning_CAVs,avg_time_lost,avg_human_time_lost,avg_CAV_time_lost,winrate
+245.3252,253.726,253.5223875,293.53,243.04049999999995,243.775,0.8304943276666781,0.8279920280720879,0.9969869756948003,0.0,8.751,8.629999999999999,2090.4819999999995,2125.46,1311.55,-187.71000000000004,7308.59,1479.566,102.70000000000002,6987.03,0.0

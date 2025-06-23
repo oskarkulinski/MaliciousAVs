@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-06-21 12:30:44 by Eclipse SUMO sumo Version v1_23_1+0675-b2a911f1b7f
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="../networks/ingolstadt_custom/ingolstadt_custom.net.xml"/>
+        <additional-files value="../results/tabql_60/det.add.xml,../results/tabql_60/route.rou.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="../results/tabql_60/SUMO_output/detailed_sumo_stats_314.xml"/>
+        <statistic-output value="../results/tabql_60/SUMO_output/sumo_stats_314.xml"/>
+    </output>
+
+    <processing>
+        <time-to-teleport value="-1"/>
+    </processing>
+
+    <report>
+        <no-step-log value="true"/>
+    </report>
+
+    <random_number>
+        <seed value="42"/>
+    </random_number>
+
+</sumoConfiguration>
+-->
+
+<tripinfos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tripinfo_file.xsd">
+</tripinfos>
