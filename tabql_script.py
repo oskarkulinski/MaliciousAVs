@@ -248,6 +248,7 @@ if __name__ == "__main__":
             env.step(action)
         pbar.update()
     
+    env.human_learning = False
     # Testing
     pbar.set_description("Testing")
     for episode in range(test_eps):
