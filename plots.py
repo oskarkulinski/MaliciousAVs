@@ -6,9 +6,9 @@ from scipy.stats import pearsonr
 
 
 # tests = ["tabql_500", "tabql_700", "tabql_1034", "tabql_500_adapt", "tabql_700_adapt", "tabql_1034_adapt"]
-# tests = ['tabql_20', 'tabql_40', 'tabql_60'] for 1035
-tests = ['tabql_700_20', 'tabql_700', 'tabql_700_60'] # for 700
-# tests = ['tabql3_500_20', 'tabql3_500', 'tabql3_500_60'] # for 500
+tests = ['tabql_1035_20', 'tabql_1035_40', 'tabql_1035_60'] # for 1035
+#tests = ['tabql_700_20', 'tabql_700', 'tabql_700_60'] # for 700#
+#tests = ['tabql3_500_20', 'tabql3_500', 'tabql3_500_60'] # for 500
 col_pre = "t_HDV_pre"
 col_test = "t_HDV_test" 
 
@@ -61,7 +61,7 @@ x = [0.2, 0.4, 0.6]
 
 
 # Calculate improvement (difference)
-delta = np.array(values1) - np.array(values2)
+delta = np.array(values2) - np.array(values1)
 
 # Build DataFrame
 df = pd.DataFrame({
